@@ -1,0 +1,10 @@
+<?php
+
+$pics = json_decode(file_get_contents('output.json'));
+
+foreach ($pics as $thumb => $pic) {?>
+    <a href="pics/<?=$pic?>" data-toggle="lightbox" data-gallery="wedding" data-title="Miguel & Dalia" class="col-sm-4">
+        <img src="thumbs/<?=$thumb?>" class="img-responsive">
+    </a>
+<?php
+}
