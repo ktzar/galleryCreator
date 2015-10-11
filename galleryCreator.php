@@ -39,6 +39,7 @@ isDirOrDie($target);
 $files = array_merge(glob("$source/*.JPG"), glob("$source/*.jpg"));
 mkdir("$target/thumbs");
 mkdir("$target/medium");
+mkdir("$target/static");
 
 $total = count($files);
 $output = array(
@@ -64,9 +65,11 @@ foreach ($files as $file) {
 }
 
 $m = new Mustache_Engine;
-echo $m->render(
+$html = $m->render(
     file_get_contents(__DIR__ . '/views/gallery.mustache'),
     $output
 );
-//echo "Writing references to output.json\n";
-//file_put_contents("$target/output.json", json_encode($output, JSON_PRETTY_PRINT));
+file_put_contents("$target/index.html", $html);
+foreach (glob("./static/*") as $file) {
+    copy($file, "$target/$file");
+}
